@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Main from '@/pages/main/main'
-
+const Main = resolve => { require(['@/pages/main/main'], resolve) }
 Vue.use(Router)
 
 export default new Router({
