@@ -1,7 +1,6 @@
 <template>
   <baidu-map class='map'
     center='上海'>
-    <!-- <bm-scale anchor="BMAP_ANCHOR_BOTTOM_LEFT"></bm-scale> -->
     <bm-navigation
       anchor="BMAP_ANCHOR_BOTTOM_LEFT"
       :offset='{width:10,height:120}'
