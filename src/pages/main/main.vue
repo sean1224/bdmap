@@ -1,24 +1,8 @@
 <template>
-  <baidu-map class='map'
-    center='上海'>
-    <bm-navigation
-      anchor="BMAP_ANCHOR_BOTTOM_LEFT"
-      :offset='{width:10,height:120}'
-      type='BMAP_NAVIGATION_CONTROL_SMALL'>
-    </bm-navigation>
-    <bm-geolocation
-      anchor="BMAP_ANCHOR_BOTTOM_LEFT"
-      :offset='{width:10,height:70}'
-      :showAddressBar="true"
-      :autoLocation="true">
-    </bm-geolocation>
-    <main-menu></main-menu>
-    <main-search @changeKeyword='changeKeyword'></main-search>
-    <main-toolbar></main-toolbar>
-    <bm-local-search keyword="虹桥" :auto-viewport="true" location="上海"></bm-local-search>
-  </baidu-map>
+  <div id='map'></div>
 </template>
 <script>
+import esriLoader from 'esri-loader'
 const MainMenu = resolve => { require(['./components/mainMenu'], resolve) }
 const MainSearch = resolve => { require(['./components/mainSearch'], resolve) }
 const MainToolbar = resolve => { require(['./components/mainToolbar'], resolve) }
@@ -27,11 +11,28 @@ export default {
   components: {MainMenu, MainSearch, MainToolbar},
   methods: {
     changeKeyword: value => console.log(value)
+  },
+  mounted () {
+    const options = {
+      url: 'https://js.arcgis.com/3.24/'
+    }
+    esriLoader.loadModules([
+      'esri/map',
+      'dojo/domReady!'
+    ], options).then(([Map]) => {
+      // eslint-disable-next-line
+      let map = new Map('map', {
+        basemap: 'streets',
+        center: [121.256151, 31.328742],
+        zoom: 15
+      })
+    }).catch(error => { console.log(error) })
   }
 }
 </script>
 
 <style lang='scss' scoped>
+@import url('https://js.arcgis.com/3.24/esri/css/esri.css');
 .map{
   position: absolute;
   left:0;
